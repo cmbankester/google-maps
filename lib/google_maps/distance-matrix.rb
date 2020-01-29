@@ -35,7 +35,28 @@ module Google
       # private
 
       def matrix
-        @matrix ||= API.query(:distance_matrix_service, @options.merge(origins: origins, destinations: destinations))
+        @matrix ||= API.query(:distance_matrix_service, @options.merge(
+          origins: origins_string,
+          destinations: destinations_string
+        ))
+      end
+
+      private
+
+      def origins_string
+        if origins.is_a? String
+          origins
+        else
+          origins.join('|')
+        end
+      end
+
+      def destinations_string
+        if destinations.is_a? String
+          destinations
+        else
+          destinations.join('|')
+        end
       end
     end
   end
