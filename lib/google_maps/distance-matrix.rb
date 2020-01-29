@@ -14,26 +14,28 @@ module Google
         @options = { language: :en }.merge(options)
       end
 
-      def method_missing(method_name, *args, &block)
-        if matrix.key?(method_name)
-          matrix.send(method_name)
-        else
-          super
-        end
-      end
+      # def method_missing(method_name, *args, &block)
+      #   if matrix.key?(method_name)
+      #     matrix.send(method_name)
+      #   else
+      #     super
+      #   end
+      # end
 
-      def respond_to_missing?(method_name, include_private = false)
-        matrix.key?(method_name) || super
-      end
+      # def respond_to_missing?(method_name, include_private = false)
+      #   matrix.key?(method_name) || super
+      # end
 
-      def get_element(row, col)
-        matrix[row][col]
-      end
+      # def get_element(row_index, col_index)
+      #   if (row = matrix[row_index]).present?
+      #     row.elements&[col_index]
+      #   end
+      # end
 
-      private
+      # private
 
       def matrix
-        @matrix ||= API.query(:distance_matrix_service, @options.merge(origins: origins, destinations: destinations)).rows
+        @matrix ||= API.query(:distance_matrix_service, @options.merge(origins: origins, destinations: destinations))
       end
     end
   end
