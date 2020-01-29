@@ -5,6 +5,7 @@ require File.expand_path('google_maps/logger', __dir__)
 require File.expand_path('google_maps/route', __dir__)
 require File.expand_path('google_maps/place', __dir__)
 require File.expand_path('google_maps/location', __dir__)
+require File.expand_path('google_maps/distance-matrix', __dir__)
 
 module Google
   module Maps
@@ -35,6 +36,10 @@ module Google
       Location.find(address, language)
     rescue ZeroResultsException
       []
+    end
+
+    def self.distance_matrix(origins, destinations, options = {})
+      DistanceMatrix.new(origins, destinations, options_with_defaults(options))
     end
 
     class << self
